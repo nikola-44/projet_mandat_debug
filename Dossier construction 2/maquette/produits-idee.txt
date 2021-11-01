@@ -1,0 +1,9 @@
+Produit :
+
+-Séparer les produits par rapport au titre de la photo qu'elle nous a envoyé.
+-Faire en sorte de pouvoir les trier par prix ?
+-Filtrer par ml. ?
+
+
+
+	

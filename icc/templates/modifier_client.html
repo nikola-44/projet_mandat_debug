@@ -1,0 +1,18 @@
+{#Zumeri Faton et Dorian Châtelain#}
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-8 offset-2">
+            <h4 class="alert alert-info">Ajouter un commentaire / note.</h4>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ commentaire }}
+                <input type="submit" class="btn btn-success" value="Modifier">
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
