@@ -72,7 +72,7 @@ def gererProduit(request):
 
 def ajouter_produit(request):
     if request.method == "POST":
-        fm = ProduitForm(request.POST)
+        fm = ProduitForm(request.POST, request.FILES)
         if fm.is_valid():
             fm.save()
             return redirect('/produits/gererProduits')
@@ -84,7 +84,7 @@ def ajouter_produit(request):
 def modifier_produit(request, pk):
     if request.method == 'POST':
         pi = Produit.objects.get(id=pk)
-        fm = ProduitForm(request.POST, instance=pi)
+        fm = ProduitForm(request.POST, request.FILES, instance=pi)
         if fm.is_valid():
             fm.save()
             return redirect('/produits/gererProduits')
