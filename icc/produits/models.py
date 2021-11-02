@@ -42,8 +42,8 @@ class Produit(models.Model):
     categorie = models.CharField(max_length=250, choices=Categorie_prod)
     image = models.ImageField(null=True, blank=True)
     capacite = models.IntegerField()
-    prix_achat = models.IntegerField(default=0) #centimes
-    prix_vente = models.IntegerField(default=0) #centimes
+    prix_achat = models.DecimalField(decimal_places=2, max_digits=5) #centimes
+    prix_vente = models.DecimalField(decimal_places=2, max_digits=5) #centimes
     statut = models.CharField(max_length=250)
     quantite = models.IntegerField()
 
