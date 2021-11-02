@@ -21,7 +21,7 @@ class ProfileForm(forms.ModelForm):
         model = Client
         fields = ('nom', 'prenom', 'dateNaissance', 'telephone', 'genre', 'commentaire')
         widgets={
-            'telephone': forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}),
+            'telephone': forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}),
         }
 
 
@@ -38,7 +38,7 @@ class ProfileModifierForm(forms.ModelForm):
             'nom': forms.TextInput(attrs={'class': 'form-control'}),
             'prenom': forms.TextInput(attrs={'class': 'form-control'}),
             'dateNaissance': forms.TextInput(attrs={'class': 'form-control', 'value': Client.dateNaissance}),
-            'telephone': forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}),
+            'telephone': forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}),
             'genre': forms.Select(attrs={'class': 'form-control'}, choices=Client.GENRES),
         }
 

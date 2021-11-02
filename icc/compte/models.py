@@ -16,7 +16,7 @@ class Client(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     dateNaissance = models.DateField()
-    telephone = models.PositiveIntegerField(max_length=12)
+    telephone = models.IntegerField(max_length=12)
     genre = models.CharField(max_length=15, choices=GENRES)
     commentaire = models.CharField(max_length=150, default='', blank=True)
 
