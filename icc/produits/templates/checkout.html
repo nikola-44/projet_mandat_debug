@@ -61,7 +61,7 @@
                 <form action="{% url 'charge' %}" method="post">
                     {% csrf_token %}
                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="{{ STRIPE_PUBLIC_KEY }}"
+                            data-key="{{ key }}"
                             data-description="Payements Gateway"
                             data-amount={% widthratio commande.get_cart_total 1 100 %}
                             data-locale="auto">

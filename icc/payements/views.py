@@ -15,10 +15,10 @@ class CheckoutPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CheckoutPageView, self).get_context_data(**kwargs)
-        # context['key'] = settings.STRIPE_PUBLIC_KEY
-        context.update({
-            "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
-        })
+        context['key'] = settings.STRIPE_PUBLIC_KEY
+        # context.update({
+        #     "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
+        # })
         return context
 
 
