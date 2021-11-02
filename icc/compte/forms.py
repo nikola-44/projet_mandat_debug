@@ -47,4 +47,7 @@ class CommentaireForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ('commentaire',)
+        widgets = {
+            'commentaire': forms.TextInput(attrs={'class': 'form-control'})
+        }
 
