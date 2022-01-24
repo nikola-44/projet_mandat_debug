@@ -1,10 +1,12 @@
 # FERREIRA STOJKOVIC Nikola
 import datetime
+import operator
 from datetime import timedelta
 
 from django.db import connection
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -15,6 +17,15 @@ from django.contrib import messages
 
 
 # Create your views here.
+
+
+# tdd
+
+
+def prestations_tdd(request):
+    prestation = Prestation.objects.all()
+    return render(request, 'reservations/admin/prestations-tdd.html', {'prestations': prestation})
+    # return HttpResponse("Classement des prestations")
 
 # PLANNING
 
