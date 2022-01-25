@@ -1,5 +1,7 @@
 import operator
+import unittest
 
+from django.db.models import Count
 from django.test import TestCase
 from compte.models import Client, User
 from reservations.models import Prestation, ResPres, Reservation
@@ -8,27 +10,53 @@ from django.urls import reverse, resolve
 
 class TestModels(TestCase):
 
-    def setUp(self):
-        user = User.objects.create()
-        client = Client.objects.create(user=user, nom="nom", prenom="prenom", dateNaissance='1993-05-25', telephone="0256489756", genre="Autre")
-        prestation = Prestation.objects.create(nom="Brushing", prix="65", pour="Longs", duree="01:00")
-        reservation = Reservation.objects.create(date='2022-01-25', heure='10:00:00', commentaire="commentaire", client=client)
-        ResPres.objects.create(reservation=reservation, prestation=prestation)
+    def test_saving_and_retrieving_items(self):
+        prestation1 = Prestation.objects.create(nom="Brushing", prix="65", pour="Longs", duree="01:00")
+        prestation1.save()
 
         prestation2 = Prestation.objects.create(nom="Chignon", prix="94", pour="Longs", duree="01:15")
-        reservation2 = Reservation.objects.create(date='2022-01-25', heure='13:00:00', commentaire="commentaire", client=client)
-        ResPres.objects.create(reservation=reservation2, prestation=prestation2)
+        prestation2.save()
 
-        reservation3 = Reservation.objects.create(date='2022-01-25', heure='14:00:00', commentaire="commentaire", client=client)
-        ResPres.objects.create(reservation=reservation3, prestation=prestation2)
+        saved_item = Prestation.objects.all()
+        self.assertEqual(saved_item.count(), 2)
 
-        Prestation.objects.create(nom="Balayage ou Mèches", prix="40", pour="/", duree="01:30")
-        Prestation.objects.create(nom="Brushing", prix="50", pour="Courts", duree="00:30")
-        Prestation.objects.create(nom="Chignon", prix="68", pour="Courts", duree="00:45")
+        first_saved_item = saved_item[0]
+        second_saved_item = saved_item[1]
+        self.assertEqual(first_saved_item, prestation1)
+        self.assertEqual(second_saved_item, prestation2)
 
-    def test_liste(self):
-        response = self.client.get('/reservations/prestations-tdd/')
-        self.assertTrue(len(response.context['prestations']) == 5)
+    def test_delete_items(self):
+        print('objets existant', Prestation.objects.all())
 
+        prestation1 = Prestation.objects.create(nom="Brushing", prix="65", pour="Longs", duree="01:00")
+        prestation1.save()
+
+        prestation2 = Prestation.objects.create(nom="Chignon", prix="94", pour="Longs", duree="01:15")
+        prestation2.save()
+
+        saved_item = Prestation.objects.all()
+        self.assertEqual(saved_item.count(), 2)
+
+        prestation1.delete()
+        prestation2.delete()
+
+        self.assertEqual(saved_item.count(), 0)
+
+    def test_has_attribute(self):
+        self.assertTrue(hasattr(Prestation(), 'nom'))
+        self.assertTrue(hasattr(Prestation(), 'pour'))
+
+    @unittest.expectedFailure
+    def test_no_dupplicate(self):
+        prestation1 = Prestation.objects.create(nom="Brushing", prix="65", pour="Longs", duree="01:00")
+        prestation1.save()
+
+        prestation2 = Prestation.objects.create(nom="Brushing", prix="65", pour="Longs", duree="01:00")
+        prestation2.save()
+
+        print(Prestation.objects.values('nom', 'pour').annotate(name_count=Count('nom')).filter(name_count__gt=1))
+        compteur = len(Prestation.objects.values('nom', 'pour'))
+        print('compteur', compteur)
+        self.assertEqual(compteur, 0)
 
 
